@@ -1,17 +1,16 @@
 // Параметры файла данных
 var csvcfg = {
-    latfield:  "lat",                      // Широта (EPSG:4326)
-    lonfield:  "lon",                      // Долгота (EPSG:4326)
-    visibility:"show",                     // Видимость маркера (1 - показывать, 0 - не показывать)
-    delimiter: ",",                        // Разделитель
-    category:  "Вид млекопитающего",       // Вид млекопитающего
-    date:      "Дата",                     // Ожидаемый формат даты: dd.mm.yyyy
+    latfield:   "lat",                      // Широта (EPSG:4326)
+    lonfield:   "lon",                      // Долгота (EPSG:4326)
+    visibility: "show",                     // Видимость маркера (1 - показывать, 0 - не показывать)
+    delimiter:  ",",                        // Разделитель
+    category:   "Вид млекопитающего",       // Вид млекопитающего
+    date:       "Дата"                      // Ожидаемый формат даты: dd.mm.yyyy
 };
 
 var map        = new L.Map('map', {center: [73.57, 55.90], zoom: 4});
 var dateSlider = new L.Control.DateSlider().addTo(map);
 var hash       = new L.Hash(map);
-
 
 var request    = new Http.Get("/walrus/data/walrus.csv", true);
 request.start().then(function(response) {

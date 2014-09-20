@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Walrus</title>
+    <meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
+    <link rel="stylesheet" href="js/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="js/jQRangeSlider-5.7.0/css/iThing-min.css" type="text/css" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <div id="map" style="position: absolute; left: 0px; top: 0px; right: 0px; height: 100%; "></div>
+    <div id="nextgis-logo" style="position: absolute; z-index: 1100; left: 3px; bottom: 3px;">
+        <a href="http://nextgis.ru" target="_blank"><img src="http://www.nextgis.ru/img/nextgis.png" alt="NextGIS: открытые геотехнологии" width="100" height="33"></a>
+    </div>
+
+    <!--jQRangeSlider-->
+    <script src="js/jquery/dist/jquery.min.js"></script>
+    <script src="js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="js/jQRangeSlider-5.7.0/jQDateRangeSlider-min.js"></script>
+
+    <script src="js/underscore/underscore-min.js"></script>
+    <script src="js/leaflet/dist/leaflet.js"></script>
+    <script src="js/leaflet-hash/leaflet-hash.js"></script>
+    <script src="js/csv2geojson/csv2geojson.js"></script>
+    <script src="js/http.js/dist/http.min.js"></script>
+    <script src="js/jQDateRangeControl.js"></script>
+    <script src="js/map.js"></script>
+
+
+    <script type="text/javascript">
+
+        L.tileLayer('http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}', {
+            attribution: 'Map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors,\
+                          Animal records &copy; <a href="http://wwf.ru">WWF</a>,\
+                          Rendering <a href="http://www.geog.uni-heidelberg.de">GIScience Research Group @ Heidelberg University</a>'
+        }).addTo(map);
+
+    </script>
+
+</body>
+</html>

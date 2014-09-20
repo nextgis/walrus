@@ -1,0 +1,57 @@
+#dateSlider {
+    width: 500px;
+    margin-top: 40px;
+    margin-right: 40px;
+}
+
+.date-slider-title {
+    float: left;
+    position: absolute;
+    top: -35px;
+    left: 10px;
+}
+
+/* glue: 0.9.4 hash: 90fbd33fb5 */
+.walrus,
+.tulen,
+.nerpa,
+.bear {
+            background-image: url('images/sprite.png');
+            background-repeat: no-repeat;
+        }
+        
+        .walrus {
+            background-position: 0 0;
+            width: 35px;
+            height: 45px;
+        }
+        
+        .tulen {
+            background-position: -35px 0;
+            width: 35px;
+            height: 45px;
+        }
+        
+        .nerpa {
+            background-position: -70px 0;
+            width: 35px;
+            height: 45px;
+        }
+        
+        .bear {
+            background-position: 0 -45px;
+            width: 35px;
+            height: 45px;
+        }
+        
+        @media screen and (-webkit-min-device-pixel-ratio: 1.0), screen and (min--moz-device-pixel-ratio: 1.0), screen and (-o-min-device-pixel-ratio: 100/100), screen and (min-device-pixel-ratio: 1.0), screen and (min-resolution: 1.0dppx) {
+            .walrus,
+    .tulen,
+    .nerpa,
+    .bear {
+                background-image: url('images/sprite.png');
+                -webkit-background-size: 105px 90px;
+                -moz-background-size: 105px 90px;
+                background-size: 105px 90px;
+            }
+        }

@@ -1,11 +1,11 @@
-// Параметры файла данных
+// Data file parameters
 var csvcfg = {
-    latfield:   "lat",                      // Широта (EPSG:4326)
-    lonfield:   "lon",                      // Долгота (EPSG:4326)
-    visibility: "show",                     // Видимость маркера (1 - показывать, 0 - не показывать)
-    delimiter:  ",",                        // Разделитель
-    category:   "Вид млекопитающего",       // Вид млекопитающего
-    date:       "Дата"                      // Ожидаемый формат даты: dd.mm.yyyy
+    latfield:   "lat",                      // Latitude (EPSG:4326)
+    lonfield:   "lon",                      // Longitude (EPSG:4326)
+    visibility: "show",                     // Show marker (1 - yes, 0 - no)
+    delimiter:  ",",                        // Delimiter
+    category:   "Вид млекопитающего",       // Species
+    date:       "Дата"                      // Date in dd.mm.yyyy format
 };
 
 var map        = new L.Map('map', {center: [73.57, 55.90], zoom: 4});
@@ -18,7 +18,7 @@ request.start().then(function(response) {
     var layers = {};
     var objectsByLayers = {};
 
-    // Маппинг вида млекопитающего на имя CSS класса маркера
+    // Lookup object for CSS classes
     var cssMap = {
         'Белый медведь': 'bear',
         'Морж'         : 'walrus',
@@ -26,7 +26,7 @@ request.start().then(function(response) {
         'Тюлень'       : 'tulen'
     };
 
-    // Преобразуем данные из формата CSV в GeoJSON
+    // Convert data from CSV to GeoJSON
     csv2geojson.csv2geojson(response, csvcfg, function(err, data) {
         var groups = _.groupBy(data.features, function(f) { return f.properties[csvcfg.category]; });
         for (var g in groups) {
@@ -64,7 +64,8 @@ request.start().then(function(response) {
             };
         }
 
-        // При каждом сдвиге слайдера перерисовываем маркеры
+        // Warning: Use this event wisely, because it is fired very frequently.
+        // It can have impact on performance. When possible, prefer the valuesChanged event.
         $(dateSlider.getContainer()).on("valuesChanging", function(e) {
             for (g in objectsByLayers) {
                 objectsByLayers[g].layer.clearLayers().addData(objectsByLayers[g].geojson);
@@ -76,7 +77,8 @@ request.start().then(function(response) {
 
 });
 
-// Функция формирования содержимого popup-а
+
+// Build popup content
 function buildPopupContent(row) {
     var thead = "<table>",
         tfoot = "</table>",

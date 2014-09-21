@@ -12,8 +12,8 @@ var map        = new L.Map('map', {center: [73.57, 55.90], zoom: 4});
 var dateSlider = new L.Control.DateSlider().addTo(map);
 var hash       = new L.Hash(map);
 
-var request    = new Http.Get("/walrus/data/walrus.csv", true);
-request.start().then(function(response) {
+var request    = $.ajax("/walrus/data/walrus.csv", true);
+request.then(function(response) {
 
     var layers = {};
     var objectsByLayers = {};

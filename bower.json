@@ -19,7 +19,6 @@
   "dependencies": {
     "leaflet": "~0.7.3",
     "leaflet-hash": "git@github.com:mlevans/leaflet-hash.git",
-    "http.js": "git@github.com:nauman1225/http.js.git",
     "csv2geojson": "git@github.com:mapbox/csv2geojson.git#~3.7.1",
     "underscore": "~1.7.0",
     "jquery": "~2.1.1",

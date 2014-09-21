@@ -1,12 +1,13 @@
 // Data file parameters
 var csvcfg = {
-    latfield:   "lat",                      // Latitude (EPSG:4326)
-    lonfield:   "lon",                      // Longitude (EPSG:4326)
-    visibility: "show",                     // Show marker (1 - yes, 0 - no)
-    delimiter:  ",",                        // Delimiter
-    category:   "Вид млекопитающего",       // Species
-    date:       "Дата",                     // Date in dd.mm.yyyy format
-    encoding:   "windows-1251"              // Encoding of data file (utf-8, windows-1251 etc.)
+    path:       "/walrus/data/walrus-cp1251.csv",  // Location of CSV file
+    latfield:   "lat",                             // Latitude (EPSG:4326)
+    lonfield:   "lon",                             // Longitude (EPSG:4326)
+    visibility: "show",                            // Show marker (1 - yes, 0 - no)
+    delimiter:  ",",                               // Delimiter
+    category:   "Вид млекопитающего",              // Species
+    date:       "Дата",                            // Date in dd.mm.yyyy format
+    encoding:   "windows-1251"                     // Encoding of data file (utf-8, windows-1251 etc.)
 };
 
 var map        = new L.Map('map', {center: [73.57, 55.90], zoom: 4});
@@ -14,7 +15,7 @@ var dateSlider = new L.Control.DateSlider().addTo(map);
 var hash       = new L.Hash(map);
 
 var request    = $.ajax({
-    url: "/walrus/data/walrus.csv",
+    url: csvcfg.path,
     beforeSend: function(xhr) {
         xhr.overrideMimeType(_.template("text/csv; charset=<%=encoding%>")({
             encoding: csvcfg.encoding

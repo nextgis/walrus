@@ -18,4 +18,4 @@ Demo
 
 Demo is currently at: http://demo.nextgis.ru/walrus/map.html
 
-See ![wiki](https://github.com/nextgis/walrus/wiki/%D0%9F%D0%BE%D0%B4%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B0-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) for notes on data preparation.
+See [wiki](https://github.com/nextgis/walrus/wiki/%D0%9F%D0%BE%D0%B4%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B0-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) for notes on data preparation.

@@ -1,13 +1,13 @@
 // Data file parameters
 var csvcfg = {
-    path:       "/walrus/data/walrus-cp1251.csv",  // Location of CSV file
+    path:       "/walrus/data/walrus.csv",  // Location of CSV file
     latfield:   "lat",                             // Latitude (EPSG:4326)
     lonfield:   "lon",                             // Longitude (EPSG:4326)
     visibility: "show",                            // Show marker (1 - yes, 0 - no)
     delimiter:  ",",                               // Delimiter
     category:   "Вид млекопитающего",              // Species
     date:       "Дата",                            // Date in dd.mm.yyyy format
-    encoding:   "windows-1251"                     // Encoding of data file (utf-8, windows-1251 etc.)
+    encoding:   "utf-8"                            // Encoding of data file (utf-8, windows-1251 etc.)
 };
 
 var map        = new L.Map('map', {center: [73.57, 55.90], zoom: 4});

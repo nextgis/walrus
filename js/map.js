@@ -1,6 +1,6 @@
 // Data file parameters
 var csvcfg = {
-    path:       "/data/walrus.csv",  // Location of CSV file
+    path:       "/demo/walrus/data/walrus.csv",  // Location of CSV file
     latfield:   "lat",                             // Latitude (EPSG:4326)
     lonfield:   "lon",                             // Longitude (EPSG:4326)
     visibility: "show",                            // Show marker (1 - yes, 0 - no)

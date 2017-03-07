@@ -1,13 +1,11 @@
-// Data file parameters
-var csvcfg = {
-    path:       "/demo/walrus/data/walrus.csv",  // Location of CSV file
-    latfield:   "lat",                             // Latitude (EPSG:4326)
-    lonfield:   "lon",                             // Longitude (EPSG:4326)
-    visibility: "show",                            // Show marker (1 - yes, 0 - no)
-    delimiter:  ",",                               // Delimiter
-    category:   "Вид млекопитающего",              // Species
-    date:       "Дата",                            // Date in dd.mm.yyyy format
-    encoding:   "utf-8"                            // Encoding of data file (utf-8, windows-1251 etc.)
+// Data parameters
+var cfg = {
+    visibility: "show",                                      // Show marker (1 - yes, 0 - no)
+    category:   "Вид млекопитающего",                        // Species
+    date:       "Дата",                                      // Date in dd.mm.yyyy format
+    instance:   "http://barents-kara-xprojects.nextgis.com", // NextGIS Web instance
+    resource:   58,                                          // NextGIS Web resource id
+
 };
 
 var map        = new L.Map('map', {center: [73.57, 55.90], zoom: 4});
@@ -15,15 +13,13 @@ var dateSlider = new L.Control.DateSlider().addTo(map);
 var hash       = new L.Hash(map);
 
 var request    = $.ajax({
-    url: csvcfg.path,
-    beforeSend: function(xhr) {
-        xhr.overrideMimeType(_.template("text/csv; charset=<%=encoding%>")({
-            encoding: csvcfg.encoding
-        }));
-    }
+    url: _.template("<%=instance%>/api/resource/<%=resource%>/geojson")({
+        instance: cfg.instance,
+        resource: cfg.resource
+    })
 });
-request.then(function(response) {
 
+request.then(function(data) {
     var layers = {};
     var objectsByLayers = {};
 
@@ -35,53 +31,56 @@ request.then(function(response) {
         'Тюлень'       : 'tulen'
     };
 
-    // Convert data from CSV to GeoJSON
-    csv2geojson.csv2geojson(response, csvcfg, function(err, data) {
-        var groups = _.groupBy(data.features, function(f) { return f.properties[csvcfg.category]; });
-        for (var g in groups) {
-            var l = L.geoJson(groups[g], {
-                onEachFeature: function (feature, layer) {
-                    layer.bindPopup(buildPopupContent(feature), {
-                        offset: [0, -22.5]
-                    });
-                },
-                pointToLayer: function (feature, latlng) {
-                    return L.marker(latlng,  {
+    var groups = _.groupBy(data.features, function(f) {
+        return f.properties[cfg.category];
+    });
+    for (var g in groups) {
+        var l = L.geoJson(groups[g], {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(buildPopupContent(feature), {
+                    offset: [0, -22.5]
+                });
+            },
+            pointToLayer: function (feature, latlng) {
+                var earthRadius = 6378137;
+                return L.marker(
+                    L.Projection.SphericalMercator.unproject(
+                        L.point(latlng.lng, latlng.lat).divideBy(earthRadius)
+                    ), {
                         icon: L.divIcon({
-                            className: cssMap[feature.properties[csvcfg.category]] || 'walrus',
+                            className: cssMap[feature.properties[cfg.category]] || 'walrus',
                             iconSize: [35, 45],
                             iconAnchor: [17.5, 45]
                         }),
                         riseOnHover: true
                     });
-                },
-                filter: function(geojson, layer) {
-                    // Date(year, month, day)
-                    var dateParts = geojson.properties[csvcfg.date].split(".");
-                    var date = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
-                    var minSliderDate = $(dateSlider.getContainer()).dateRangeSlider("min");
-                    var maxSliderDate = $(dateSlider.getContainer()).dateRangeSlider("max");
-                    var showOnMap = parseInt(geojson.properties[csvcfg.visibility]);
-                    return ((date >= minSliderDate) && (date <= maxSliderDate) && showOnMap);
-                }
-            }).addTo(map);
-
-            layers[g] = l;
-            objectsByLayers[g] = {
-                layer: l,
-                geojson: groups[g]
-            };
-        }
-
-        // Warning: Use this event wisely, because it is fired very frequently.
-        // It can have impact on performance. When possible, prefer the valuesChanged event.
-        $(dateSlider.getContainer()).on("valuesChanging", function(e) {
-            for (g in objectsByLayers) {
-                objectsByLayers[g].layer.clearLayers().addData(objectsByLayers[g].geojson);
+            },
+            filter: function(geojson, layer) {
+                // Date(year, month, day)
+                var dateParts = geojson.properties[cfg.date].split(".");
+                var date = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+                var minSliderDate = $(dateSlider.getContainer()).dateRangeSlider("min");
+                var maxSliderDate = $(dateSlider.getContainer()).dateRangeSlider("max");
+                var showOnMap = parseInt(geojson.properties[cfg.visibility]);
+                return ((date >= minSliderDate) && (date <= maxSliderDate) && showOnMap);
             }
-        });
+        }).addTo(map);
 
+        layers[g] = l;
+        objectsByLayers[g] = {
+            layer: l,
+            geojson: groups[g]
+        };
+    }
+
+    // Warning: Use this event wisely, because it is fired very frequently.
+    // It can have impact on performance. When possible, prefer the valuesChanged event.
+    $(dateSlider.getContainer()).on("valuesChanging", function(e) {
+        for (g in objectsByLayers) {
+            objectsByLayers[g].layer.clearLayers().addData(objectsByLayers[g].geojson);
+        }
     });
+
     L.control.layers(null, layers).addTo(map);
 
 });
@@ -96,7 +95,7 @@ function buildPopupContent(row) {
     var tbodytpl = _.template("<tr><th><%=key%></th><td><%=value%></td></tr>");
 
     _.each(row.properties, function(item,key,list) {
-        if (key !== csvcfg.visibility) {
+        if (key !== cfg.visibility) {
             tbody += tbodytpl({key: key, value: list[key]});
         }
     });

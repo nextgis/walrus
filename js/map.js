@@ -4,7 +4,7 @@ var cfg = {
     category:   "Вид млекопитающего",                        // Species
     date:       "Дата",                                      // Date in dd.mm.yyyy format
     instance:   "http://barents-kara-xprojects.nextgis.com", // NextGIS Web instance
-    resource:   58,                                          // NextGIS Web resource id
+    resource:   66,                                          // NextGIS Web resource id
 
 };
 
@@ -28,7 +28,9 @@ request.then(function(data) {
         'Белый медведь': 'bear',
         'Морж'         : 'walrus',
         'Нерпа'        : 'nerpa',
-        'Тюлень'       : 'tulen'
+        'Тюлень'       : 'tulen',
+        'Морской заяц' : 'zayats',
+        'Белуха'       : 'belukha'
     };
 
     var groups = _.groupBy(data.features, function(f) {

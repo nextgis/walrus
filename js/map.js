@@ -4,7 +4,7 @@ var cfg = {
     category:   "Вид млекопитающего",                        // Species
     date:       "Дата",                                      // Date in dd.mm.yyyy format
     instance:   "http://barents-kara-xprojects.nextgis.com", // NextGIS Web instance
-    resource:   66,                                          // NextGIS Web resource id
+    resource:   68,                                          // NextGIS Web resource id
 
 };
 

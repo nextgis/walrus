@@ -29,8 +29,8 @@ request.then(function(data) {
         'Морж'         : 'walrus',
         'Нерпа'        : 'nerpa',
         'Тюлень'       : 'tulen',
-        'Морской заяц' : 'zayats',
-        'Белуха'       : 'belukha'
+        'Морской заяц' : 'tulen',
+        'Белуха'       : 'tulen'
     };
 
     var groups = _.groupBy(data.features, function(f) {

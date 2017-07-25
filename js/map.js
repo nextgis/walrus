@@ -3,7 +3,7 @@ var cfg = {
     visibility: "show",                                      // Show marker (1 - yes, 0 - no)
     category:   "Вид млекопитающего",                        // Species
     date:       "Дата",                                      // Date in dd.mm.yyyy format
-    instance:   "http://barents-kara-xprojects.nextgis.com", // NextGIS Web instance
+    instance:   "https://barents-kara-xprojects.nextgis.com", // NextGIS Web instance
     resource:   68,                                          // NextGIS Web resource id
 
 };
